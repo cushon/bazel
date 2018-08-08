@@ -206,16 +206,16 @@ rm -rf $$TMPDIR
 
 default_java_toolchain(
     name = "toolchain_hostjdk8",
-    bootclasspath = [":bootclasspath"],
-    extclasspath = [":extclasspath"],
+    bootclasspath = [":platformclasspath"],
     jvm_opts = JDK8_JVM_OPTS,
     source_version = "8",
     target_version = "8",
 )
 
 default_java_toolchain(
-    name = "toolchain",
+    name = "toolchain_hostjdk9",
     bootclasspath = [":platformclasspath"],
+    jvm_opts = JDK9_JVM_OPTS,
     source_version = "8",
     target_version = "8",
 )
