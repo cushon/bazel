@@ -171,17 +171,19 @@ alias(
 
 genrule(
     name = "platformclasspath",
-    srcs = ["DumpPlatformClassPath.java"],
+    srcs = [
+        "DumpPlatformClassPath.java",
+        "@bazel_tools//tools/jdk:current_java_runtime",
+    ],
     outs = ["platformclasspath.jar"],
     cmd = """
 set -eu
 TMPDIR=$$(mktemp -d -t tmp.XXXXXXXX)
-$(JAVABASE)/bin/javac $< -d $$TMPDIR
+$(JAVABASE)/bin/javac $(location :DumpPlatformClassPath.java) -d $$TMPDIR
 $(JAVA) -cp $$TMPDIR DumpPlatformClassPath $@
 rm -rf $$TMPDIR
 """,
-    toolchains = ["@bazel_tools//tools/jdk:current_host_java_runtime"],
-    tools = ["@bazel_tools//tools/jdk:current_host_java_runtime"],
+    toolchains = ["@bazel_tools//tools/jdk:current_java_runtime"],
 )
 
 default_java_toolchain(
